@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+       #map {
+        height: 500px;
+        width: 100%;
+       }
+		</style>
+	</head>
+	<body>
+		<div id="map"/></div>
+		<script>
+		</script>    
+		<script>
+ //(function() {
+
+	//window.onload = function() {
+
+		
+
+		// Creating the JSON data
+		   var json = [
+  {
+    "title": "Bangladesh",
+    "lat": 23.6850,
+    "lng":  90.3563,
+    "description": "Bangladesh is a country of Agriculture"
+  },
+  {
+    "title": "India",
+    "lat": 22.855170,
+    "lng":79.299316,
+    "description": "India is a country of HIndusthan."
+  },
+  {
+    "title": "Nepal",
+    "lat": 28.394857,
+    "lng": 84.124008,
+    "description": "Nepal."
+  }
+];
+// Creating a new map
+function initMap() {
+		var map = new google.maps.Map(document.getElementById("map"), {
+          center: new google.maps.LatLng(20.593684, 78.96288000000004),
+          zoom: 5,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        });
+
+
+		// Creating a global infoWindow object that will be reused by all markers
+		var infoWindow = new google.maps.InfoWindow();
+
+		// Looping through the JSON data
+		for (var i = 0, length = json.length; i < length; i++) {
+			var data = json[i],
+				latLng = new google.maps.LatLng(data.lat, data.lng);
+
+			// Creating a marker and putting it on the map
+			var marker = new google.maps.Marker({
+				position: latLng,
+				map: map,
+				title: data.title
+			});
+
+			// Creating a closure to retain the correct data, notice how I pass the current data in the loop into the closure (marker, data)
+			(function(marker, data) {
+
+				// Attaching a click event to the current marker
+				google.maps.event.addListener(marker, "click", function(e) {
+					infoWindow.setContent(data.description);
+					infoWindow.open(map, marker);
+				});
+
+
+			})(marker, data);
+
+		}
+		
+		
+
+	}
+
+		</script>
+		<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZFz_WsNdC-IiX9cYLAvxqvKyHU6Cy_2I&callback=initMap">
+		</script>
+	</body>
+</html>
