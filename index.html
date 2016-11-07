@@ -47,32 +47,14 @@ function initMap() {
           zoom: 5,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         });
- var contentString = '<div id="content">'+
-            '<div id="siteNotice">'+
-            '</div>'+
-            '<h1 id="firstHeading" class="firstHeading">Uluru</h1>'+
-            '<div id="bodyContent">'+
-            '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large ' +
-            'sandstone rock formation in the southern part of the '+
-            'Northern Territory, central Australia. It lies 335&#160;km (208&#160;mi) '+
-            'south west of the nearest large town, Alice Springs; 450&#160;km '+
-            '(280&#160;mi) by road. Kata Tjuta and Uluru are the two major '+
-            'features of the Uluru - Kata Tjuta National Park. Uluru is '+
-            'sacred to the Pitjantjatjara and Yankunytjatjara, the '+
-            'Aboriginal people of the area. It has many springs, waterholes, '+
-            'rock caves and ancient paintings. Uluru is listed as a World '+
-            'Heritage Site.</p>'+
-            '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-            'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-            '(last visited June 22, 2009).</p>'+
-            '</div>'+
-            '</div>';
 
 		// Creating a global infoWindow object that will be reused by all markers
-		/*var infoWindow = new google.maps.InfoWindow({
-		 content: contentString
-		 });*/
-var infoWindow = new google.maps.InfoWindow();
+
+	var infoWindow = new google.maps.InfoWindow({maxWidth: 350});
+	// Event that closes the Info Window with a click on the map
+  
+
+   
 		// Looping through the JSON data
 		for (var i = 0, length = json.length; i < length; i++) {
 			var data = json[i],
@@ -81,6 +63,7 @@ var infoWindow = new google.maps.InfoWindow();
 			// Creating a marker and putting it on the map
 			var marker = new google.maps.Marker({
 				position: latLng,
+				label: "@",
 				map: map,
 				title: data.title
 			});
@@ -94,13 +77,16 @@ var infoWindow = new google.maps.InfoWindow();
 					infoWindow.setContent(contentString);
 					infoWindow.open(map, marker);
 				});
-
+				
 			})(marker, data);
+							 
+	  }
+	  google.maps.event.addListener(map, "click", function(e) {
+	   infoWindow.close();
+	  });
+	 
 
-		}	
-
-	}
-
+}	
 		</script>
 		<script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDZFz_WsNdC-IiX9cYLAvxqvKyHU6Cy_2I&callback=initMap">
