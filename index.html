@@ -72,7 +72,7 @@ function initMap() {
 		/*var infoWindow = new google.maps.InfoWindow({
 		 content: contentString
 		 });*/
-
+var infoWindow = new google.maps.InfoWindow();
 		// Looping through the JSON data
 		for (var i = 0, length = json.length; i < length; i++) {
 			var data = json[i],
@@ -91,9 +91,7 @@ function initMap() {
 				// Attaching a click event to the current marker
 				google.maps.event.addListener(marker, "click", function(e) {
 					var contentString = '<a href="" target="_blank">'+ data.description +'</a>' ;
-					var infoWindow = new google.maps.InfoWindow({
-		              content:contentString
-		             });
+					infoWindow.setContent(contentString);
 					infoWindow.open(map, marker);
 				});
 
